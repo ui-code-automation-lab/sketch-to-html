@@ -16,6 +16,7 @@ const htmlRender = function (layer, parentLayer, imagePath = '') {
             childString += htmlRender(child, layer, imagePath);
         });
     }
+    // console.log('childString',childString,'layer.type',layer.type)
     let layerInstance = new Layer();
     layerInstance.layer = layer;
     layerInstance.parentLayer = parentLayer;

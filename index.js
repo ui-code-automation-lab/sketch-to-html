@@ -44,6 +44,7 @@ module.exports = function (source, callback) {
             return;
         }
         // 复制图片到结果文件夹
+        if(fs.existsSync('./output/images'))
         fse.copySync('./output/images', './output/html/images');
         // 复制模板资源文件夹
         fse.copySync('./template/assets', './output/html/assets');
@@ -77,7 +78,7 @@ module.exports = function (source, callback) {
             return r;
         })());
         callback();
-        exec(`open "${__dirname + '/output/html/index.html'}"`);
+        // exec(`open "${__dirname + '/output/html/index.html'}"`);
 
     });
 }

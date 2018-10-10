@@ -14,10 +14,12 @@ const rename = function (name) {
     return nextName;
 };
 const handleItem = function (item) {
+    console.log('item_name:',item.name,'item_name:',item._class)
     let result = {};
     result.id = item.do_objectID;
     result.frame = item.frame || {};
     result.style = styleParser(item.style, item.attributedString, item);
+    
     result.path = pathParser(item);
     result.isVisible = item.isVisible;
     let name = item.name ? item.name : '未命名';
@@ -56,6 +58,9 @@ const handleItem = function (item) {
     if(item.symbolID) {
         result.symbolID = item.symbolID;
     }
+    // if(item._class=='rectangle'){
+    //     console.log(result)
+    // }
     return result;
 };
 

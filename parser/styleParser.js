@@ -111,6 +111,73 @@ const styleParser = function (style, attributedString, layer) {
         }
         result.text = decodedAttributedString.NSString.split(/\n/g).join(`<div style="height:${util.px2rem(result.paragraphSpacing)}"></div>`);
     }
+    if(style.textStyle && attributedString && !attributedString.archivedAttributedString){
+        let encodedAttributes;
+        let decodedNSColor;
+        let decodedNSParagraphStyle;
+        let decodedMSAttributedStringFontAttribute;
+        if (style.textStyle.encodedAttributes) {
+            encodedAttributes = style.textStyle.encodedAttributes;
+            
+            if (encodedAttributes.MSAttributedStringColorAttribute) {
+                
+                const colors = {};
+                colors.red = parseFloat(encodedAttributes.MSAttributedStringColorAttribute.red);
+                colors.green = parseFloat(encodedAttributes.MSAttributedStringColorAttribute.green);
+                colors.blue = parseFloat(encodedAttributes.MSAttributedStringColorAttribute.blue);
+    
+                
+                colors.alpha = parseFloat(encodedAttributes.MSAttributedStringColorAttribute.alpha);
+                
+                result.color = colorParser(colors);
+            } else {
+                result.color = result.color || '#000000';
+            }
+            if (encodedAttributes.MSAttributedStringFontAttribute) {
+                
+                result.fontSize = encodedAttributes.MSAttributedStringFontAttribute.attributes.size;
+                
+                result.fontFamily = encodedAttributes.MSAttributedStringFontAttribute.attributes.name;
+            }
+        }
+        const decodedAttributedString = null;
+        
+
+        // if (decodedAttributedString.NSAttributes.MSAttributedStringFontAttribute) {
+        //     let fontAttr = decodedAttributedString.NSAttributes.MSAttributedStringFontAttribute.NSFontDescriptorAttributes;
+        //     result.fontSize = fontAttr.NSFontSizeAttribute;
+        //     if(fontAttr.NSFontNameAttribute){
+        //         result.fontFamily = fontAttr.NSFontNameAttribute;
+        //     }
+        // }
+        // if (decodedMSAttributedStringFontAttribute) {
+        //     result.fontSize = decodedMSAttributedStringFontAttribute.NSFontDescriptorAttributes.NSFontSizeAttribute;
+        //     if(decodedMSAttributedStringFontAttribute.NSFontDescriptorAttributes.NSFontNameAttribute){
+        //         result.fontFamily = decodedMSAttributedStringFontAttribute.NSFontDescriptorAttributes.NSFontNameAttribute;
+        //     }
+        // }
+        // if (decodedAttributedString.NSAttributes.NSKern ){
+        //     result.letterSpacing = decodedAttributedString.NSAttributes.NSKern;
+        // }
+        // if (encodedAttributes.NSKern ){
+        //     result.letterSpacing = encodedAttributes.NSKern;
+        // }
+        // if (decodedAttributedString.NSAttributes.NSParagraphStyle) {
+        //     const paragraphSpacing = decodedAttributedString.NSAttributes.NSParagraphStyle.NSParagraphSpacing;
+        //     const maxLineHeight = decodedAttributedString.NSAttributes.NSParagraphStyle.NSMaxLineHeight;
+        //     const minLineHeight = decodedAttributedString.NSAttributes.NSParagraphStyle.NSMinLineHeight;
+        //     if (decodedAttributedString.NSAttributes.NSParagraphStyle.NSAlignment) {
+        //         result.textAlign = decodedAttributedString.NSAttributes.NSParagraphStyle.NSAlignment;
+        //     } else {
+        //         result.textAlign = 0;
+        //     }
+        //     result.minLineHeight = minLineHeight;
+        //     result.maxLineHeight = maxLineHeight;
+        //     result.lineHeight = minLineHeight; //+ paragraphSpacing;
+        //     result.paragraphSpacing = paragraphSpacing;
+        // }
+        result.text = ""
+    }
     if (style.fills) {
         style.fills.forEach((fill) => {
             if (fill.isEnabled) {
