@@ -15,17 +15,25 @@ class Layer {
 
     getStyle () {
         let finalLayer;
+        // console.log('this.layer',this.layer)
         if(ShapePathLayer.isShapePath(this.layer, this.parentLayer)) {
             finalLayer = new ShapePathLayer();
         } else if(this.layer.type == 'shapeGroup') {
             finalLayer = new ShapeGroupLayer();
         } else if(this.layer.type == 'group') {
-            finalLayer = new GroupLayer();
+            if(this.layer.onlyCom){
+                let components = require('./../components/'+this.layer.onlyCom);
+                finalLayer = new components();
+            }else{
+                finalLayer = new GroupLayer();
+            }
+            
         } else if(this.layer.type == 'bitmap') {
             finalLayer = new BitmapLayer();
         } else if(this.layer.type == 'text') {
             finalLayer = new TextLayer();
         } else {
+            
             finalLayer = new CommonLayer();
         }
         finalLayer.layer = this.layer;
@@ -37,16 +45,26 @@ class Layer {
 
     getHtml (childString) {
         let finalLayer;
+        console.log('this.layer.type:',this.layer.type)
         if(ShapePathLayer.isShapePath(this.layer, this.parentLayer)) {
             finalLayer = new ShapePathLayer();
         } else if(this.layer.type == 'shapeGroup') {
             finalLayer = new ShapeGroupLayer();
         } else if(this.layer.type == 'group') {
+            
+            
             finalLayer = new GroupLayer();
         } else if(this.layer.type == 'bitmap') {
             finalLayer = new BitmapLayer();
         } else if(this.layer.type == 'text') {
             finalLayer = new TextLayer();
+        } else if(this.layer.type == 'symbolInstance'){
+            if(this.layer.symbolJson){
+                let components = require('./../components/'+this.layer.symbolJson.name);
+                finalLayer = new components();
+            }else{
+                finalLayer = new CommonLayer();
+            }
         } else {
             finalLayer = new CommonLayer();
         }

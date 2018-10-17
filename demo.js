@@ -1,4 +1,4 @@
 var go = require('./index');
-go('./555.sketch',()=>{
+go('./1222.sketch',()=>{
     console.log('success');
 })
