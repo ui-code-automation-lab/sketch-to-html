@@ -31,7 +31,8 @@ class Button extends GroupLayer {
                 }
             })
         }
-        return `<Button id="${layer.id}" class="${layer.symbolJson.type}" text="${childString}" style="${util.getStyleString(layer.finalStyle)}" ></Button>`;
+        return `<Button id="${layer.id}" class="${layer.symbolJson.type}" text="${"{'"+childString+"'}"}" style="${util.getStyleString(layer.finalStyle)}" ></Button>
+        `;
     }
 }
 
