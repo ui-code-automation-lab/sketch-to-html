@@ -97,7 +97,7 @@ class TextLayer extends LayerProtocol {
 
     getHtml (childString) {
         let layer = this.layer;
-        return `<div id="${layer.id}" class="${layer.name}" style="${util.getStyleString(layer.finalStyle)}" >
+        return `<div id="${layer.id}" className="${layer.name}" style={{${util.getReactStyleString(layer.finalStyle)}}} >
             ${childString}
         </div>
         `;

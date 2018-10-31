@@ -1,4 +1,6 @@
 var go = require('./index');
-go('./1222.sketch',()=>{
+var utils = require('./util');
+utils.isH5=false;
+go('./2.sketch',()=>{
     console.log('success');
 })

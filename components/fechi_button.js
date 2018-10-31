@@ -12,8 +12,8 @@ class Button extends GroupLayer {
             position: 'absolute',
             left: util.px2rem(this.layer.frame.x),
             top: util.px2rem(this.layer.frame.y),
-            width: util.px2rem(this.layer.frame.width),
-            height: util.px2rem(this.layer.frame.height),
+            // width: util.px2rem(this.layer.frame.width),
+            // height: util.px2rem(this.layer.frame.height),
             'transform': this.layer.style.transform ? this.layer.style.transform.join(' ') : null,
             'box-shadow': this.layer.style.boxShadow,
             'background': this.layer.style.linearGradientString,
@@ -31,8 +31,15 @@ class Button extends GroupLayer {
                 }
             })
         }
-        return `<Button id="${layer.id}" class="${layer.symbolJson.type}" text="${"{'"+childString+"'}"}" style="${util.getStyleString(layer.finalStyle)}" ></Button>
-        `;
+        layer.r_attribute = "";
+        for(var name in layer.symbolJson){
+            if(name == 'name') continue;
+            layer.r_attribute += `${name} = "${layer.symbolJson[name]}" `
+        }
+        return `
+            <div style={{${util.getReactStyleString(layer.finalStyle)}}}>
+                <Button id="${layer.id}" ${layer.r_attribute} className="${layer.name}" text="${childString}" ></Button>
+            </div>`;
     }
 }
 

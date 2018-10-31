@@ -1,7 +1,8 @@
 # OSX
 #
 .DS_Store
-
+*.sketch
+*.zip
 # Xcode
 #
 build/

@@ -1,4 +1,5 @@
 var util = {
+    isH5:true,
     /**
      * 生成 rgba 颜色值
      * @param color
@@ -146,6 +147,21 @@ var util = {
         return styleString;
     },
     /**
+     * 序列化 style
+     * @param style
+     * @returns {Array}
+     */
+    getReactStyleString(style) {
+        let styleString = [];
+        for (let i in style) {
+            if (style[i] !== null && style[i] !== undefined ) {
+                styleString.push(`${i}:"${style[i]}"`);
+            }
+        }
+        styleString = styleString.join(',');
+        return styleString;
+    },
+    /**
      * 忽略 null 和 undefined 的 assign
      * @param target
      * @param source
@@ -167,9 +183,14 @@ var util = {
     },
     px2rem(value){
         if (value) {
-            value = value / 75;
-            value = parseFloat(value).toFixed(6);
-            return (value + 'rem');
+            if(this.isH5){
+                value = value / 75;
+                value = parseFloat(value).toFixed(6);
+                return (value + 'rem');
+            }else{
+                return (value + 'px');
+            }
+            
         }
         return null;
     }
