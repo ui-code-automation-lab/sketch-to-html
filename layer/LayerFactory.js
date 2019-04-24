@@ -18,18 +18,19 @@ class Layer {
         // console.log('this.layer',this.layer)
         if(ShapePathLayer.isShapePath(this.layer, this.parentLayer)) {
             finalLayer = new ShapePathLayer();
-        } else if(this.layer.type == 'shapeGroup') {
+        } else if(this.layer.type == 'ShapeGroup') {
             finalLayer = new ShapeGroupLayer();
-        } else if(this.layer.type == 'group') {
+        } else if(this.layer.type == 'Group') {
             finalLayer = new GroupLayer();
-        } else if(this.layer.type == 'bitmap') {
+        } else if(this.layer.type == 'Bitmap') {
             finalLayer = new BitmapLayer();
-        } else if(this.layer.type == 'text') {
+        } else if(this.layer.type == 'Text') {
             finalLayer = new TextLayer();
         } else if(this.layer.type == 'symbolInstance'){
             if(this.layer.symbolJson){
-                let components = require('./../components/'+this.layer.symbolJson.name);
-                finalLayer = new components();
+                let components = require('./../components/renderFactory');
+                console.log(components,this.layer.symbolJson,this.layer)
+                finalLayer = new components(this.layer.symbolJson.name);
             }else{
                 finalLayer = new CommonLayer();
             }
@@ -46,23 +47,23 @@ class Layer {
 
     getHtml (childString) {
         let finalLayer;
-        console.log('this.layer.type:',this.layer.type)
         if(ShapePathLayer.isShapePath(this.layer, this.parentLayer)) {
             finalLayer = new ShapePathLayer();
-        } else if(this.layer.type == 'shapeGroup') {
+        } else if(this.layer.type == 'ShapeGroup') {
             finalLayer = new ShapeGroupLayer();
-        } else if(this.layer.type == 'group') {
+        } else if(this.layer.type == 'Group') {
             
             
             finalLayer = new GroupLayer();
-        } else if(this.layer.type == 'bitmap') {
+        } else if(this.layer.type == 'Bitmap') {
             finalLayer = new BitmapLayer();
-        } else if(this.layer.type == 'text') {
+        } else if(this.layer.type == 'Text') {
             finalLayer = new TextLayer();
         } else if(this.layer.type == 'symbolInstance'){
             if(this.layer.symbolJson){
-                let components = require('./../components/'+this.layer.symbolJson.name);
-                finalLayer = new components();
+                let components = require('./../components/renderFactory');
+                console.log(components,this.layer.symbolJson,this.layer)
+                finalLayer = new components(this.layer.symbolJson.name);
             }else{
                 finalLayer = new CommonLayer();
             }

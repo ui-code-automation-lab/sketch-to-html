@@ -1,9 +1,11 @@
 const util = require('../util');
 const GroupLayer = require('../layer/Group');
 
-class Button extends GroupLayer {
-    constructor () {
+class Factory extends GroupLayer {
+    constructor (tagname='div') {
         super();
+        this._tagname = tagname;
+        
     }
 
     getStyle () {
@@ -24,24 +26,31 @@ class Button extends GroupLayer {
 
     getHtml (childString) {
         let layer = this.layer;
-        if(layer.overrides){
+        let inDeep = layer.symbolJson.inDeep;
+        delete layer.symbolJson['inDeep'];
+        if(layer.overrides && !inDeep){
             layer.overrides.map(data=>{
                 if(data.type == 'Override'){
                     childString = data.value;
                 }
             })
         }
+        
         layer.r_attribute = "";
         for(var name in layer.symbolJson){
             if(name == 'name') continue;
             const layerAttrValue = typeof layer.symbolJson[name] === 'string' ? `{'${layer.symbolJson[name]}'}` : `{${layer.symbolJson[name]}}`;
             layer.r_attribute += `${name} = ${layerAttrValue} `;
         }
-        return `
+        return inDeep?`
+        <div style={{${util.getReactStyleString(layer.finalStyle)}}}>
+            <${this._tagname} id="${layer.id}" ${layer.r_attribute} >${childString}</${this._tagname}>
+        </div>`:
+        `
             <div style={{${util.getReactStyleString(layer.finalStyle)}}}>
-                <Button id="${layer.id}" ${layer.r_attribute} className="${layer.name}" text="${childString}" ></Button>
+                <${this._tagname} id="${layer.id}" ${layer.r_attribute}  text="${childString}" ></${this._tagname}>
             </div>`;
     }
 }
 
-module.exports = Button;
+module.exports = Factory;

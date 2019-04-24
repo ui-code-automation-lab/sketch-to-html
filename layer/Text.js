@@ -9,6 +9,7 @@ class TextLayer extends LayerProtocol {
     }
 
     getStyle () {
+        console.log('##layer##=> ', this.layer);
         let width = this.layer.frame.width, height = this.layer.frame.height;
         // 处理小于12px的文字图层
         if(this.layer.style.fontSize && this.layer.style.fontSize < 12) {
@@ -41,7 +42,7 @@ class TextLayer extends LayerProtocol {
         };
         let parentOtherStyle = {};
 
-        if(this.parentLayer && this.parentLayer.type == 'shapeGroup') {
+        if(this.parentLayer && this.parentLayer.type == 'ShapeGroup') {
             parentOtherStyle = {
                 'color': this.parentLayer.style.color,
                 'background-color': this.parentLayer.style.backgroundColor,
@@ -89,8 +90,10 @@ class TextLayer extends LayerProtocol {
             finalStyle = style;
         } else {
             StyleStore.set(this.selector, style);
-            finalStyle = {};
+            finalStyle = style;
         }
+
+        console.log('##finalStyle##=>', otherStyle, finalStyle);
 
         return finalStyle;
     }
@@ -98,7 +101,7 @@ class TextLayer extends LayerProtocol {
     getHtml (childString) {
         let layer = this.layer;
         return `<div id="${layer.id}" className="${layer.name}" style={{${util.getReactStyleString(layer.finalStyle)}}} >
-            ${childString}
+            <span>${childString}</span>
         </div>
         `;
     }

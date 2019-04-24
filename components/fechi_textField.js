@@ -1,7 +1,7 @@
 const util = require('../util');
 const GroupLayer = require('../layer/Group');
 
-class Button extends GroupLayer {
+class TextField extends GroupLayer {
     constructor () {
         super();
     }
@@ -12,8 +12,8 @@ class Button extends GroupLayer {
             position: 'absolute',
             left: util.px2rem(this.layer.frame.x),
             top: util.px2rem(this.layer.frame.y),
-            // width: util.px2rem(this.layer.frame.width),
-            // height: util.px2rem(this.layer.frame.height),
+            width: util.px2rem(this.layer.frame.width),
+            height: util.px2rem(this.layer.frame.height),
             'transform': this.layer.style.transform ? this.layer.style.transform.join(' ') : null,
             'box-shadow': this.layer.style.boxShadow,
             'background': this.layer.style.linearGradientString,
@@ -34,14 +34,14 @@ class Button extends GroupLayer {
         layer.r_attribute = "";
         for(var name in layer.symbolJson){
             if(name == 'name') continue;
-            const layerAttrValue = typeof layer.symbolJson[name] === 'string' ? `{'${layer.symbolJson[name]}'}` : `{${layer.symbolJson[name]}}`;
+            const layerAttrValue = typeof layer.symbolJson[name] === 'string' ? `'${layer.symbolJson[name]}'` : `{${layer.symbolJson[name]}}`;
             layer.r_attribute += `${name} = ${layerAttrValue} `;
         }
         return `
             <div style={{${util.getReactStyleString(layer.finalStyle)}}}>
-                <Button id="${layer.id}" ${layer.r_attribute} className="${layer.name}" text="${childString}" ></Button>
+                <TextField ${layer.r_attribute} className="${layer.name}" ></TextField>
             </div>`;
     }
 }
 
-module.exports = Button;
+module.exports = TextField;
