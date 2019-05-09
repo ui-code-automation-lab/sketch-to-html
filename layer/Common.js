@@ -72,9 +72,11 @@ class CommonLayer extends LayerProtocol {
             finalStyle = style;
         } else {
             StyleStore.set(this.selector, style);
-            finalStyle = {};
+            finalStyle = style;
         }
-
+        if (this.layer.type === 'Artboard') {
+          finalStyle.background = '#fff';
+        }
         return finalStyle;
     }
 

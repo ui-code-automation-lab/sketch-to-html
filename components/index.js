@@ -1,4 +1,7 @@
 
-module.exports = {
-    'fechi_button':require('./fechi_button'),
+let config = {'Button':''}
+let output = {}
+for(let name in config){
+    output[name]=require('./renderFactory');
 }
+module.exports = output;

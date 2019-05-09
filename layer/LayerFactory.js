@@ -28,8 +28,9 @@ class Layer {
             finalLayer = new TextLayer();
         } else if(this.layer.type == 'symbolInstance'){
             if(this.layer.symbolJson){
-                let components = require('./../components/'+this.layer.symbolJson.name);
-                finalLayer = new components();
+                let components = require('./../components/renderFactory');
+                console.log(components,this.layer.symbolJson,this.layer)
+                finalLayer = new components(this.layer.symbolJson.name);
             }else{
                 finalLayer = new CommonLayer();
             }
@@ -46,7 +47,7 @@ class Layer {
 
     getHtml (childString) {
         let finalLayer;
-        // console.log('this.layer.type:',this.layer)
+        console.log('this.layer.type:',this.layer.type)
         if(ShapePathLayer.isShapePath(this.layer, this.parentLayer)) {
             finalLayer = new ShapePathLayer();
         } else if(this.layer.type == 'shapeGroup') {
@@ -61,8 +62,9 @@ class Layer {
             finalLayer = new TextLayer();
         } else if(this.layer.type == 'symbolInstance'){
             if(this.layer.symbolJson){
-                let components = require('./../components/'+this.layer.symbolJson.name);
-                finalLayer = new components();
+                let components = require('./../components/renderFactory');
+                console.log(components,this.layer.symbolJson,this.layer)
+                finalLayer = new components(this.layer.symbolJson.name);
             }else{
                 finalLayer = new CommonLayer();
             }

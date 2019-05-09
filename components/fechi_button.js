@@ -24,9 +24,9 @@ class Button extends GroupLayer {
 
     getHtml (childString) {
         let layer = this.layer;
-        if(layer.overrideValues){
-            layer.overrideValues.map(data=>{
-                if(data._class == 'overrideValue'){
+        if(layer.overrides){
+            layer.overrides.map(data=>{
+                if(data.type == 'Override'){
                     childString = data.value;
                 }
             })
@@ -34,7 +34,8 @@ class Button extends GroupLayer {
         layer.r_attribute = "";
         for(var name in layer.symbolJson){
             if(name == 'name') continue;
-            layer.r_attribute += `${name} = "${layer.symbolJson[name]}" `
+            const layerAttrValue = typeof layer.symbolJson[name] === 'string' ? `{'${layer.symbolJson[name]}'}` : `{${layer.symbolJson[name]}}`;
+            layer.r_attribute += `${name} = ${layerAttrValue} `;
         }
         return `
             <div style={{${util.getReactStyleString(layer.finalStyle)}}}>
