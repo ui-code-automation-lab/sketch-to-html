@@ -1,6 +1,7 @@
 /**
  * Layer 协议母类，供继承，子类需实现其方法
  */
+let util = require('./../util') 
 class LayerProtocol {
     constructor () {
         this.layer = {};
@@ -24,6 +25,9 @@ class LayerProtocol {
      */
     getHtml (childString) {
         return '';
+    }
+    getClass(name){
+        return util.isReact?`className="${name}"`:`class="${name}"`
     }
 }
 

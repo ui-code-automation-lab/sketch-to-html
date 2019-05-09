@@ -24,8 +24,9 @@ class GroupLayer extends LayerProtocol {
 
     getHtml (childString) {
         let layer = this.layer;
-        return `<div id="${layer.id}" className="${layer.name}" style={{${util.getReactStyleString(layer.finalStyle)}}}>
-            ${childString}
+        // console.log(layer.name,layer.name.indexOf('2html_Animation')!=-1)
+        return `<div id="${layer.id}" ${this.getClass(layer.name)} style=${util.getStyleString(layer.finalStyle)}>
+            ${layer.name.indexOf('2html_Animation')!=-1?"{this.animation()}":childString}
         </div>
         `;
     }

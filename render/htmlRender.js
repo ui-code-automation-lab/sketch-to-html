@@ -6,6 +6,7 @@ const htmlRender = function (layer, parentLayer, imagePath = '') {
         return '';
     }
     if (layer.type == 'symbolInstance') {
+        if(SymbolStore.get(layer.symbolID))
         layer.childrens = SymbolStore.get(layer.symbolID).childrens;
     }
     let childString = '';
@@ -19,7 +20,9 @@ const htmlRender = function (layer, parentLayer, imagePath = '') {
     // console.log('childString',childString,'layer.type',layer.type)
     let layerInstance = new Layer();
     layerInstance.layer = layer;
+    // console.log(layer.name)
     layerInstance.parentLayer = parentLayer;
+    
     layerInstance.imagePath = imagePath;
     return layerInstance.getHtml(childString);
 };

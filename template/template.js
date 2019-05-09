@@ -1,5 +1,25 @@
-
-module.exports = function(html,layer) {
+var util = require('./../util')
+module.exports = function(html,layer,css) {
+    if(util.isReact){
+        return `/*eslint-disable*/
+        import React from 'react';
+        import './${css}';
+        export default class App extends React.Component{
+            constructor(){
+                super();
+            }
+            animation(){
+                return (<div></div>);
+            }
+        
+            render(){
+                return (
+                    ${html}
+                )
+            }
+        }`
+        ;
+    }
     return `<html>
 <head>
 

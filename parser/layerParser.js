@@ -24,14 +24,18 @@ const handleItem = function (item) {
     result.path = pathParser(item);
     result.isVisible = item.isVisible;
     let name = item.name ? item.name : '未命名';
+    if(name.indexOf('2html_Animation')==-1)
+    {
+        name = name.replace(/[\u4e00-\u9fa5]*/, function (m) {
+            return pinyin(m, {
+                style: 'normal'
+            });
+        }).replace(/^([^a-z_A-Z])/, '_$1').replace(/[^a-z_A-Z0-9-]/g, '_');
     
-    name = name.replace(/[\u4e00-\u9fa5]*/, function (m) {
-        return pinyin(m, {
-            style: 'normal'
-        });
-    }).replace(/^([^a-z_A-Z])/, '_$1').replace(/[^a-z_A-Z0-9-]/g, '_');
-    result.name = rename(name);
-    
+        result.name = rename(name);
+    }else{
+        result.name = name;
+    }
     
     nameStore.push(result.name);
     result.type = item._class;
@@ -53,7 +57,14 @@ const handleItem = function (item) {
         result.text = result.style.text || item.name;
     }
     if (item._class === 'bitmap') {
+        if(item.image._ref.indexOf('.png')==-1&&item.image._ref.indexOf('.jpg')==-1)
         result.image = item.image._ref + '.png';
+        else
+        result.image = item.image._ref
+
+        if(util.isReact){
+           
+        }
     }
     if (item._class === 'artboard') {
         result.frame.x = null;
@@ -61,9 +72,11 @@ const handleItem = function (item) {
     }
     if(item.symbolID) {
         result.symbolID = item.symbolID;
-        if(result.symbolID.split('&').length>=1)
-        result.symbolJson =JSON.parse(result.symbolID.split('&')[0]);
-        result.overrideValues = item.overrideValues;
+        if(result.symbolID.split('&').length>1)
+        {
+            result.symbolJson =JSON.parse(result.symbolID.split('&')[0]);
+            result.overrideValues = item.overrideValues;
+        }
         // if(item.do_objectID.indexOf('&')!=-1){
         //     result.onlyCom = item.do_objectID.split('&')[0];
         // }
@@ -81,7 +94,9 @@ const layerParser = function (item) {
     if(element.symbolJson&&element.symbolJson.name&&components[element.symbolJson.name]){
 
     }else{
-        if (item.layers) {
+        if(item.name.indexOf('2html_Animation')!=-1){
+            //把动画部分空出来处理动画部分 
+        } else if (item.layers) {
             element.childrens = [];
             item.layers.forEach((_item) => {
                 let r = layerParser(_item);

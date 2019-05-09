@@ -1,5 +1,6 @@
 var util = {
     isH5:true,
+    isReact:false,
     /**
      * 生成 rgba 颜色值
      * @param color
@@ -71,7 +72,7 @@ var util = {
      * @returns {boolean}
      */
     isCircle: function (layer) {
-        if (!layer.path.points || layer.path.points.length !== 4) {
+        if (!layer.path||!layer.path.points || layer.path.points.length !== 4) {
             return false;
         }
         const isSquare = this.isSqu( layer);
@@ -137,6 +138,9 @@ var util = {
      * @returns {Array}
      */
     getStyleString(style) {
+        if(util.isReact){
+            return util.getReactStyleString(style);
+        }
         let styleString = [];
         for (let i in style) {
             if (style[i] !== null && style[i] !== undefined ) {
@@ -144,7 +148,7 @@ var util = {
             }
         }
         styleString = styleString.join(';');
-        return styleString;
+        return `"${styleString}"`;
     },
     /**
      * 序列化 style
@@ -155,11 +159,21 @@ var util = {
         let styleString = [];
         for (let i in style) {
             if (style[i] !== null && style[i] !== undefined ) {
-                styleString.push(`${i}:"${style[i]}"`);
+                let arr=i.split('-');
+                let name = '';
+                if(arr.length==1){
+                    name=i;
+                }else{
+                    for(let y=1;y<arr.length;y++){
+                        arr[y]=arr[y].substr(0,1).toUpperCase()+arr[y].substring(1)
+                    }
+                    name=arr.join("");
+                }
+                styleString.push(`${name}:"${style[i]}"`);
             }
         }
         styleString = styleString.join(',');
-        return styleString;
+        return `{{${styleString}}}`;
     },
     /**
      * 忽略 null 和 undefined 的 assign

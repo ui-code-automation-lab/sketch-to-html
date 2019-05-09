@@ -20,11 +20,27 @@ var outPages = [];
 const handleArtBoard = (layer, pageName) => {
     if(layer.type == 'artboard') {
         StyleStore.reset();
-        styleRender(layer, null, '../');
-        var html = htmlRender(layer, null, '../');
-        html = template(html, layer);
-        fse.outputFileSync(`./output/html/${pageName}/artboard-${layer.name}.html`, html);
-        fse.outputFileSync(`./output/html/${pageName}/artboard-${layer.name}.css`, StyleStore.toString());
+        styleRender(layer, null,util.isReact?'./':'../');
+        var html = htmlRender(layer, null, util.isReact?'./':'../');
+        html = template(html, layer,`${layer.name}.css`);
+        if(util.isReact){
+            fse.outputFileSync(`./output/html/${pageName}/${layer.name}.jsx`, html);
+            fse.outputFileSync(`./output/html/${pageName}/index.jsx`, `/*eslint-disable*/
+import React from 'react';
+import ReactDOM from 'react-dom';
+import App from './${layer.name}';
+
+ReactDOM.render(
+    <App />,
+    document.getElementById('root'),
+);
+            `);
+            fse.outputFileSync(`./output/html/${pageName}/${layer.name}.css`, StyleStore.toString());
+        }else{
+            fse.outputFileSync(`./output/html/${pageName}/artboard-${layer.name}.html`, html);
+            fse.outputFileSync(`./output/html/${pageName}/artboard-${layer.name}.css`, StyleStore.toString());
+        }
+        
         outPages.push({
             name: layer.name,
             url: `./${pageName}/artboard-${layer.name}.html`
@@ -65,8 +81,10 @@ module.exports = function (source, callback) {
             outResults.push(result);
         });
         outResults.forEach((result) => {
-            if(result.type === 'page') {
+            if(result.type === 'page'&&result.name.indexOf('Symbols')==-1) {
                 handleArtBoard(result, `page-${result.name}`);
+                fse.copySync('./output/images', `./output/html/page-${result.name}/images`);
+                exec(`open ./output/html/page-${result.name}/`);
             }
         });
         // 输出模板页面 js 中的页面配置数据

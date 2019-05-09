@@ -46,7 +46,7 @@ class Layer {
 
     getHtml (childString) {
         let finalLayer;
-        console.log('this.layer.type:',this.layer.type)
+        // console.log('this.layer.type:',this.layer)
         if(ShapePathLayer.isShapePath(this.layer, this.parentLayer)) {
             finalLayer = new ShapePathLayer();
         } else if(this.layer.type == 'shapeGroup') {

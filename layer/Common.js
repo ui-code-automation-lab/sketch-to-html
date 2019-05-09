@@ -2,7 +2,9 @@ const util = require('../util');
 const StyleStore = require('../store/StyleStore');
 const path = require('path');
 const LayerProtocol = require('./LayerProtocol');
-
+/**
+ * hasClippingMask   属性,是否是一个蒙版
+ */
 class CommonLayer extends LayerProtocol {
     constructor () {
         super();
@@ -78,7 +80,7 @@ class CommonLayer extends LayerProtocol {
 
     getHtml (childString) {
         let layer = this.layer;
-        return `<div id="${layer.id}" className="${layer.name}" style={{${util.getReactStyleString(layer.finalStyle)}}}>
+        return `<div id="${layer.id}" ${this.getClass(layer.name)} style=${util.getStyleString(layer.finalStyle)}>
             ${childString}
             </div>
         `;

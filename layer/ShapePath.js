@@ -60,7 +60,7 @@ class ShapePathLayer extends LayerProtocol {
     getHtml () {
         let layer = this.layer;
         return `
-<svg id="${layer.id}" version="1.1" xmlns="http://www.w3.org/2000/svg" className="${layer.name}" style="${util.getStyleString(layer.finalStyle)}"  >
+<svg id="${layer.id}" version="1.1" xmlns="http://www.w3.org/2000/svg" ${this.getClass(layer.name)} style=${util.getStyleString(layer.finalStyle)}  >
     <path d="${layer.path}" />
 </svg>`;
     }

@@ -6,6 +6,7 @@ const styleRender = function (layer, parentLayer, imagePath = '', selector = '')
         return '';
     }
     if (layer.type == 'symbolInstance') {
+        if(SymbolStore.get(layer.symbolID))
         layer.childrens = SymbolStore.get(layer.symbolID).childrens;
     }
     selector = selector + '.' + layer.name + ' ';
