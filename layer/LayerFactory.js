@@ -15,7 +15,6 @@ class Layer {
 
     getStyle () {
         let finalLayer;
-        // console.log('this.layer',this.layer)
         if(ShapePathLayer.isShapePath(this.layer, this.parentLayer)) {
             finalLayer = new ShapePathLayer();
         } else if(this.layer.type == 'shapeGroup') {

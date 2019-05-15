@@ -83,6 +83,7 @@ module.exports = function (source, callback) {
         outResults.forEach((result) => {
             if(result.type === 'page'&&result.name.indexOf('Symbols')==-1) {
                 handleArtBoard(result, `page-${result.name}`);
+                if(fs.existsSync('./output/images'))
                 fse.copySync('./output/images', `./output/html/page-${result.name}/images`);
                 exec(`open ./output/html/page-${result.name}/`);
             }

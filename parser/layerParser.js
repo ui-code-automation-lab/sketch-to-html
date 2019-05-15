@@ -98,12 +98,21 @@ const layerParser = function (item) {
             //把动画部分空出来处理动画部分 
         } else if (item.layers) {
             element.childrens = [];
-            item.layers.forEach((_item) => {
+            while(item.layers.length>0){
+                let _item =item.layers.shift();
+                if(_item.hasClippingMask){
+                    _item.layers = item.layers.slice();
+                    // console.log(_item.layers)
+                    item.layers.length=0;
+                }
                 let r = layerParser(_item);
                 if (r) {
                     element.childrens.push(r);
                 }
-            });
+                
+                // console.log('遮罩属性:',_item.hasClippingMask)
+            }
+
         }
     }
     if (element.type === 'symbolMaster') {

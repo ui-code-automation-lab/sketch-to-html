@@ -148,6 +148,7 @@ var util = {
             }
         }
         styleString = styleString.join(';');
+        // console.log(styleString)
         return `"${styleString}"`;
     },
     /**

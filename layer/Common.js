@@ -11,7 +11,14 @@ class CommonLayer extends LayerProtocol {
     }
 
     getStyle () {
+        
         let width = this.layer.frame.width, height = this.layer.frame.height;
+        // console.log(this.layer.name,this.layer.frame.x,this.layer.frame.y)
+        // console.log('父级:',this.parentLayer)
+        if(this.parentLayer&&this.parentLayer.isMask){
+            this.layer.frame.x = this.layer.frame.x - this.parentLayer.frame.x
+            this.layer.frame.y = this.layer.frame.y - this.parentLayer.frame.y
+        }
         let otherStyle = {
             'color': this.layer.style.color,
             'background-image': this.layer.style.backgroundImage ? `url(${path.join(this.imagePath, this.layer.style.backgroundImage)}.png)` : null,
@@ -52,6 +59,7 @@ class CommonLayer extends LayerProtocol {
             delete this.parentLayer.finalStyle['background-color']
 
         }
+        
         let frameStyle = {
             'position': 'absolute',
             'left': util.px2rem(this.layer.frame.x),
@@ -63,6 +71,8 @@ class CommonLayer extends LayerProtocol {
             'background': this.layer.style.linearGradientString,
             'opacity': this.layer.style.opacity,
         };
+       
+        console.log(frameStyle)
 
         let style = Object.assign({}, frameStyle, otherStyle);
         style = util.assign(parentOtherStyle, style);
@@ -77,11 +87,13 @@ class CommonLayer extends LayerProtocol {
         if (this.layer.type === 'Artboard') {
           finalStyle.background = '#fff';
         }
+        
         return finalStyle;
     }
 
     getHtml (childString) {
         let layer = this.layer;
+        // console.log(layer.name,layer.finalStyle)
         return `<div id="${layer.id}" ${this.getClass(layer.name)} style=${util.getStyleString(layer.finalStyle)}>
             ${childString}
             </div>
