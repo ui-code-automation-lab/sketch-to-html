@@ -4,6 +4,7 @@ module.exports = function(html,layer,css) {
         return `/*eslint-disable*/
         import React from 'react';
         import './${css}';
+        import './userEdit.css';
         export default class App extends React.Component{
             constructor(){
                 super();

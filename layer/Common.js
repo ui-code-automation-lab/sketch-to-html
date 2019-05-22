@@ -13,7 +13,7 @@ class CommonLayer extends LayerProtocol {
     getStyle () {
         
         let width = this.layer.frame.width, height = this.layer.frame.height;
-        // console.log(this.layer.name,this.layer.frame.x,this.layer.frame.y)
+        console.log(this.layer.name)
         // console.log('父级:',this.parentLayer)
         if(this.parentLayer&&this.parentLayer.isMask){
             this.layer.frame.x = this.layer.frame.x - this.parentLayer.frame.x
@@ -71,7 +71,14 @@ class CommonLayer extends LayerProtocol {
             'background': this.layer.style.linearGradientString,
             'opacity': this.layer.style.opacity,
         };
-       
+        if(!util.isH5){
+            if(this.layer.type == 'artboard'){
+                frameStyle.position='relative';
+                frameStyle.left='50%';
+                frameStyle["transform"]="translateX(-50%)";
+                frameStyle["-webkit-transform"]="translateX(-50%)";
+            }
+        }
         console.log(frameStyle)
 
         let style = Object.assign({}, frameStyle, otherStyle);

@@ -36,6 +36,7 @@ ReactDOM.render(
 );
             `);
             fse.outputFileSync(`./output/html/${pageName}/${layer.name}.css`, StyleStore.toString());
+            fse.outputFileSync(`./output/html/${pageName}/userEdit.css`,util.getEditCSS());
         }else{
             fse.outputFileSync(`./output/html/${pageName}/artboard-${layer.name}.html`, html);
             fse.outputFileSync(`./output/html/${pageName}/artboard-${layer.name}.css`, StyleStore.toString());

@@ -1,6 +1,19 @@
 var util = {
     isH5:true,
     isReact:false,
+    minWidthforPC:1080,
+    getEditCSS(){
+        return `
+            #root{
+                
+                overflow: hidden;
+                width: 100%;
+                min-width: ${util.minWidthforPC}px;
+                overflow-y: overlay;
+
+            }
+        `
+    },
     /**
      * 生成 rgba 颜色值
      * @param color
