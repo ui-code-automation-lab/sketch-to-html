@@ -3,7 +3,15 @@ var util = {
     isReact:false,
     minWidthforPC:1080,
     getEditCSS(){
-        return `
+        return this.isH5?`.html_ant{
+            border: 10px solid #ff0000;
+            }
+            .html_ant:after{
+                content:"动画区域";
+                font-size: "75px";
+                color:'#000000'
+            }
+        `:`
             #root{
                 
                 overflow: hidden;
@@ -11,6 +19,14 @@ var util = {
                 min-width: ${util.minWidthforPC}px;
                 overflow-y: overlay;
 
+            }
+            .html_ant{
+                border: 10px solid #ff0000;
+            }
+            .html_ant:after{
+                content:"动画区域";
+                font-size: "75px";
+                color:'#000000'
             }
         `
     },
@@ -72,10 +88,10 @@ var util = {
      * @returns {*}
      */
     isSqu: function (layer) {
-        if (layer.path.points.length !== 4) {
+        if (layer.points.length !== 4) {
             return false;
         }
-        const rectPoints = layer.path.points.map(x => this.toPoint(x.point, layer));
+        const rectPoints = layer.points.map(x => this.toPoint(x.point, layer));
         const isSquare = this.isSquare(rectPoints[0], rectPoints[1], rectPoints[2], rectPoints[3]);
         return isSquare;
     },
@@ -85,11 +101,11 @@ var util = {
      * @returns {boolean}
      */
     isCircle: function (layer) {
-        if (!layer.path||!layer.path.points || layer.path.points.length !== 4) {
+        if (!layer.points || layer.points.length !== 4) {
             return false;
         }
         const isSquare = this.isSqu( layer);
-        const hasCurveTo = layer.path.points.filter(x => x.hasCurveTo === true).length === 4;
+        const hasCurveTo = layer.points.filter(x => x.hasCurveTo === true).length === 4;
         if (isSquare && hasCurveTo) {
             return true;
         }

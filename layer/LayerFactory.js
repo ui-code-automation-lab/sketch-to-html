@@ -28,7 +28,6 @@ class Layer {
         } else if(this.layer.type == 'symbolInstance'){
             if(this.layer.symbolJson){
                 let components = require('./../components/renderFactory');
-                console.log(components,this.layer.symbolJson,this.layer)
                 finalLayer = new components(this.layer.symbolJson.name);
             }else{
                 finalLayer = new CommonLayer();

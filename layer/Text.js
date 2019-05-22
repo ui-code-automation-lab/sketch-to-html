@@ -81,7 +81,36 @@ class TextLayer extends LayerProtocol {
             'background': this.layer.style.linearGradientString,
             'opacity': this.layer.style.opacity,
         };
-
+        console.log(this.layer.style)
+        /**
+         * alignment
+         * 0:左对齐
+         * 1:右对其
+         * 2:居中对其
+         * 3:两边对齐
+         * 
+         * verticalAlignment:
+         * 0:上对齐
+         * 1:垂直居中对齐
+         * 2:垂直下对齐
+         */
+        switch(this.layer.style.alignment){
+            case 0:
+                frameStyle['text-align']='left'
+                break;
+            case 1:
+                    frameStyle['text-align']='right'
+                break;
+            case 2:
+                    frameStyle['text-align']='center'
+                break;
+            case 3:
+                    frameStyle['text-align']='center'
+                break;
+            default:
+                    frameStyle['text-align']='left'
+                break;
+        }
         let style = Object.assign({}, frameStyle, otherStyle);
         style = util.assign(parentOtherStyle, style);
         let finalStyle;
@@ -93,7 +122,7 @@ class TextLayer extends LayerProtocol {
             finalStyle = style;
         }
 
-        console.log('##finalStyle##=>', otherStyle, finalStyle);
+        // console.log('##finalStyle##=>', otherStyle, finalStyle);
 
         return finalStyle;
     }

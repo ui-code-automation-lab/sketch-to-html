@@ -139,6 +139,9 @@ const styleParser = function (style, attributedString, layer) {
                 
                 result.fontFamily = encodedAttributes.MSAttributedStringFontAttribute.attributes.name;
             }
+            if(encodedAttributes.paragraphStyle){
+                result.alignment=encodedAttributes.paragraphStyle.alignment
+            }
         }
         const decodedAttributedString = null;
         

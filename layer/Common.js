@@ -79,7 +79,6 @@ class CommonLayer extends LayerProtocol {
                 frameStyle["-webkit-transform"]="translateX(-50%)";
             }
         }
-        console.log(frameStyle)
 
         let style = Object.assign({}, frameStyle, otherStyle);
         style = util.assign(parentOtherStyle, style);

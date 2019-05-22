@@ -39,13 +39,15 @@ const handleItem = function (item) {
     
     nameStore.push(result.name);
     result.type = item._class;
+    
     if (item._class === 'oval') {
         result.isCircle = util.isCircle(item);
+        console.log('类型:',result.isCircle)
         if (result.isCircle) {
-            const p1 = util.toPoint(item.path.points[0].point, item);
-            const p2 = util.toPoint(item.path.points[1].point, item);
-            const p3 = util.toPoint(item.path.points[2].point, item);
-            const p4 = util.toPoint(item.path.points[3].point, item);
+            const p1 = util.toPoint(item.points[0].point, item);
+            const p2 = util.toPoint(item.points[1].point, item);
+            const p3 = util.toPoint(item.points[2].point, item);
+            const p4 = util.toPoint(item.points[3].point, item);
             result.style.borderRadius = (p1.y - p3.y) / 2;
         }
     }

@@ -25,7 +25,7 @@ class GroupLayer extends LayerProtocol {
     getHtml (childString) {
         let layer = this.layer;
         // console.log(layer.name,layer.name.indexOf('2html_Animation')!=-1)
-        return `<div id="${layer.id}" ${this.getClass(layer.name)} style=${util.getStyleString(layer.finalStyle)}>
+        return `<div id="${layer.id}" ${layer.name.indexOf('2html_Animation')!=-1?this.getClass(`${layer.name} html_ant`):this.getClass(`${layer.name}`)} style=${util.getStyleString(layer.finalStyle)}>
             ${layer.name.indexOf('2html_Animation')!=-1?"{this.animation()}":childString}
         </div>
         `;
