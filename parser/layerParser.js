@@ -42,7 +42,6 @@ const handleItem = function (item) {
     
     if (item._class === 'oval') {
         result.isCircle = util.isCircle(item);
-        console.log('类型:',result.isCircle)
         if (result.isCircle) {
             const p1 = util.toPoint(item.points[0].point, item);
             const p2 = util.toPoint(item.points[1].point, item);
@@ -54,9 +53,21 @@ const handleItem = function (item) {
     result.isMask = !!item.hasClippingMask;
     if (item._class === 'rectangle') {
         result.isRect = util.isRect(item);
+        if(util.getRectRadius(item)!=-1&&util.getRectRadius(item)!=undefined){
+            //解决了奇怪的圆角矩形判断不是矩形的情况
+            result.isRect = true;
+            result.style.borderRadius = util.getRectRadius(item);
+        }
+        console.log('this is rect?',result.isRect,result.style.borderRadius )
     }
     if (item._class === 'text') {
-        result.text = result.style.text || item.name;
+        console.log(result)
+        if(item.attributedString&&item.attributedString.string){
+            result.text = item.attributedString.string
+        }else{
+            result.text = result.style.text || item.name;
+        }
+        
     }
     if (item._class === 'bitmap') {
         if(item.image._ref.indexOf('.png')==-1&&item.image._ref.indexOf('.jpg')==-1)

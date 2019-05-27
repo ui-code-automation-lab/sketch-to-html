@@ -129,6 +129,24 @@ var util = {
         }
         return false;
     },
+    /**
+     * 获取矩形的圆角值
+     * @param {*} layer 
+     */
+    getRectRadius(layer){
+        const path = layer;
+        if (path && path.points.length < 4) {
+            return -1;
+        }else {
+            let radius = path.fixedRadius;
+            for(var i=0;i<path.points.length;i++){
+                if(path.points[i].cornerRadius!=radius){
+                    return -1;
+                }
+            }
+            return radius;
+        }
+    },
     IsRectangleAnyOrder(a, b, c, d) {
         return this.IsRectangle(a, b, c, d) || this.IsRectangle(b, c, a, d) || this.IsRectangle(c, a, b, d);
     },

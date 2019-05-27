@@ -30,6 +30,7 @@ class CommonLayer extends LayerProtocol {
             'border-style': this.layer.style.borderStyle,
             'box-shadow': this.layer.style.boxShadow,
         };
+        console.log(this.layer.name,this.layer.style)
         let parentOtherStyle = {};
 
         if(this.parentLayer && this.parentLayer.type == 'shapeGroup') {
@@ -79,7 +80,7 @@ class CommonLayer extends LayerProtocol {
                 frameStyle["-webkit-transform"]="translateX(-50%)";
             }
         }
-
+        
         let style = Object.assign({}, frameStyle, otherStyle);
         style = util.assign(parentOtherStyle, style);
         let finalStyle;
