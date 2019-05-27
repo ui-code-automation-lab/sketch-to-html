@@ -98,6 +98,8 @@ const layerParser = function (item) {
     }else{
         if(item.name.indexOf('2html_Animation')!=-1){
             //把动画部分空出来处理动画部分 
+        } else if(item.name.indexOf('HIDE')!=-1) {
+            //隐藏的元素
         } else if (item.layers) {
             element.childrens = [];
             while(item.layers.length>0){
