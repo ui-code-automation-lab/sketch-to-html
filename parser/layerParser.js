@@ -58,10 +58,8 @@ const handleItem = function (item) {
             result.isRect = true;
             result.style.borderRadius = util.getRectRadius(item);
         }
-        console.log('this is rect?',result.isRect,result.style.borderRadius )
     }
     if (item._class === 'text') {
-        console.log(result)
         if(item.attributedString&&item.attributedString.string){
             result.text = item.attributedString.string
         }else{
